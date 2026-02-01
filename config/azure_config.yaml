@@ -1,0 +1,60 @@
+# Wiki Generator Configuration for Azure OpenAI
+
+llm:
+  providers:
+    - name: azure_openai
+      model: gpt-4  # Your Azure deployment name (e.g., gpt-4, gpt-35-turbo)
+      api_key_env: AZURE_OPENAI_API_KEY
+      azure_endpoint_env: AZURE_OPENAI_ENDPOINT
+      api_version: "2024-02-15-preview"
+      max_tokens: 4096
+      temperature: 0.7
+      timeout: 60
+
+  fallback_order:
+    - azure_openai
+
+  chunk_size: 4000
+  max_retries: 3
+  retry_delay: 2
+
+images:
+  strategies:
+    - extract
+    - search
+    - generate
+
+  generate_provider: dalle
+  generate_model: dall-e-3
+  max_width: 1024
+  max_height: 1024
+  format: webp
+
+site:
+  generator: mkdocs
+  theme: material
+  output_dir: ./output/site
+  site_name: Generated Wiki
+  site_description: AI-generated wiki from source content
+
+extraction:
+  chunk_size: 4000
+  overlap: 200
+  entity_types:
+    - character
+    - location
+    - organization
+    - concept
+    - event
+    - item
+  min_confidence: 0.6
+
+# Storage
+database_url: sqlite:///./output/data/wiki.db
+
+# Logging
+log_level: INFO
+
+# Paths
+output_dir: ./output
+prompts_dir: ./config/prompts
