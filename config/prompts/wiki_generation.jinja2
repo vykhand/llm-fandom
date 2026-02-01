@@ -1,0 +1,101 @@
+You are writing a comprehensive wiki article for the following entity. Create detailed, well-structured content in Markdown format.
+
+Entity Information:
+- **Name**: {{ entity.name }}
+- **Type**: {{ entity.type }}
+- **Description**: {{ entity.description }}
+{% if entity.aliases %}
+- **Also Known As**: {{ entity.aliases | join(", ") }}
+{% endif %}
+
+{% if entity.attributes %}
+Key Attributes:
+{% for key, value in entity.attributes.items() %}
+- **{{ key | title }}**: {{ value }}
+{% endfor %}
+{% endif %}
+
+{% if related_entities %}
+Related Entities:
+{% for related in related_entities %}
+- {{ related.name }} ({{ related.type }})
+{% endfor %}
+{% endif %}
+
+Write a comprehensive wiki article with the following sections:
+
+## Overview
+A detailed introduction covering what/who this entity is, its significance, and key characteristics (2-3 paragraphs).
+
+{% if entity.type == "character" %}
+## Biography
+Cover the character's background, major life events, and development throughout the story.
+
+## Personality and Traits
+Describe personality, motivations, skills, and distinctive characteristics.
+
+{% elif entity.type == "location" %}
+## Geography
+Describe the physical layout, notable features, and important areas within this location.
+
+## History
+Cover the location's background and significant historical events.
+
+{% elif entity.type == "organization" %}
+## History and Formation
+Describe how and why the organization was formed.
+
+## Structure and Members
+Explain the organizational structure and notable members.
+
+## Activities and Purpose
+Detail what the organization does and its goals.
+
+{% elif entity.type == "concept" %}
+## Explanation
+Provide a thorough explanation of the concept, theory, or idea.
+
+## Significance
+Explain why this concept is important and how it's applied.
+
+{% elif entity.type == "event" %}
+## Background
+Describe the circumstances leading up to the event.
+
+## What Happened
+Detail the event itself chronologically.
+
+## Aftermath and Consequences
+Explain the results and impact of the event.
+
+{% elif entity.type == "item" %}
+## Description
+Provide detailed physical description and properties.
+
+## History and Origin
+Cover where the item came from and its history.
+
+## Abilities and Uses
+Describe what the item does and how it's used.
+{% endif %}
+
+## Relationships
+Describe connections to other entities, people, places, or events.
+
+{% if entity.mentions %}
+## Mentions and Quotes
+Include relevant quotes or excerpts that mention this entity:
+{% for mention in entity.mentions[:3] %}
+> {{ mention }}
+{% endfor %}
+{% endif %}
+
+Guidelines:
+- Write in an encyclopedic, objective tone (like Wikipedia)
+- Use present tense for fictional content
+- Be detailed but concise
+- Only include information that can be inferred from the entity data provided
+- Don't invent facts not present in the entity information
+- Use Markdown formatting (headers, lists, bold, italic, quotes)
+- Include internal wiki links using [[Entity Name]] format for related entities
+- Aim for 400-800 words total

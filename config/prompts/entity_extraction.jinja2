@@ -1,0 +1,58 @@
+You are analyzing content to extract entities for a comprehensive wiki. Your goal is to identify and extract all significant entities that would be worthy of their own wiki articles.
+
+Content to analyze:
+```
+{{ content }}
+```
+
+Extract all entities of these types:
+
+**Characters/People**: Main characters, supporting roles, historical figures, authors, creators
+- Include protagonists, antagonists, and significant minor characters
+- Include real people if mentioned
+
+**Locations**: Cities, buildings, regions, countries, fictional places, landmarks
+- Both real and fictional locations
+- Include significant rooms, areas, or geographical features
+
+**Organizations**: Groups, companies, factions, governments, institutions, clubs
+- Formal and informal organizations
+- Include teams, departments, and alliances
+
+**Concepts**: Important ideas, theories, systems, technologies, magic systems, laws
+- Philosophical concepts
+- In-universe rules or mechanics
+- Important themes or motifs
+
+**Events**: Major occurrences, battles, ceremonies, historical events, turning points
+- Both past and present events in the narrative
+- Include festivals, wars, meetings, etc.
+
+**Items**: Significant objects, artifacts, weapons, technology, treasures, tools
+- Named items or items of importance
+- Include vehicles, devices, and special equipment
+
+For each entity, provide:
+1. **Name**: The canonical/primary name (most commonly used)
+2. **Type**: One of: character, location, organization, concept, event, item
+3. **Description**: A comprehensive 2-4 sentence description covering what/who it is, its significance, and key characteristics
+4. **Aliases**: List all alternative names, nicknames, or titles (empty list if none)
+5. **Attributes**: A dictionary of relevant attributes based on type:
+   - Characters: occupation, age, species, affiliation, status (alive/dead), abilities
+   - Locations: type (city/building/etc), region, climate, population, ruler
+   - Organizations: type, leader, purpose, size, status (active/defunct)
+   - Concepts: category, origin, scope
+   - Events: date/time, location, participants, outcome
+   - Items: type, owner, material, abilities/properties, origin
+6. **Key Relationships**: List important relationships to other entities you've extracted
+   - Format: "relationship_type: target_entity_name"
+   - Examples: "ally_of: John Doe", "located_in: London", "owns: Magic Sword"
+
+Guidelines:
+- Be thorough but selective - only extract entities significant enough to warrant a wiki article
+- Include entities even if they're only briefly mentioned but seem important
+- Don't extract generic items or unnamed characters unless they're significant
+- If unsure about an entity's importance, include it (we can filter later)
+- Extract context and details from the text to make descriptions rich and informative
+- Ensure descriptions are factual and based on the content provided
+- Don't invent information not present in the text

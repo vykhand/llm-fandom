@@ -1,0 +1,66 @@
+# Wiki Generator Default Configuration
+
+llm:
+  providers:
+    - name: anthropic
+      model: claude-3-5-sonnet-20241022
+      api_key_env: ANTHROPIC_API_KEY
+      max_tokens: 4096
+      temperature: 0.7
+      timeout: 60
+
+    - name: openai
+      model: gpt-4-turbo-preview
+      api_key_env: OPENAI_API_KEY
+      max_tokens: 4096
+      temperature: 0.7
+      timeout: 60
+
+  fallback_order:
+    - anthropic
+    - openai
+
+  chunk_size: 4000
+  max_retries: 3
+  retry_delay: 2
+
+images:
+  strategies:
+    - extract    # Priority 1: Extract from source
+    - search     # Priority 2: Web search
+    - generate   # Priority 3: AI generation
+
+  generate_provider: dalle
+  generate_model: dall-e-3
+  max_width: 1024
+  max_height: 1024
+  format: webp
+
+site:
+  generator: mkdocs
+  theme: material
+  output_dir: ./output/site
+  site_name: Generated Wiki
+  site_description: AI-generated wiki from source content
+
+extraction:
+  chunk_size: 4000
+  overlap: 200
+  entity_types:
+    - character
+    - location
+    - organization
+    - concept
+    - event
+    - item
+  min_confidence: 0.6
+
+# Storage
+database_url: sqlite:///./output/data/wiki.db
+
+# Logging
+log_level: INFO
+
+# Paths
+output_dir: ./output
+prompts_dir: ./config/prompts
