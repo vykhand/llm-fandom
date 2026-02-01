@@ -22,7 +22,7 @@ Successfully implemented a production-ready AI-powered wiki generator that trans
 #### Phase 1: Foundation ⭐⭐⭐⭐⭐
 - **Status**: Complete
 - **Deliverables**: 
-  - Poetry project with 20+ dependencies
+  - uv project with 20+ dependencies
   - Comprehensive directory structure
   - Pydantic data models (5 core models)
   - Configuration system with YAML support
@@ -440,14 +440,14 @@ The implementation successfully delivers on the original vision:
 
 ```bash
 # 1. Install
-poetry install
+uv sync --extra dev
 
 # 2. Configure
 cp .env.example .env
 # Add your API key to .env
 
 # 3. Generate
-poetry run wiki-generator generate examples/sample_story.txt --serve --verbose
+uv run wiki-generator generate examples/sample_story.txt --serve --verbose
 
 # 4. Enjoy your wiki at http://localhost:8000
 ```

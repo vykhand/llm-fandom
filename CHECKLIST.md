@@ -2,7 +2,7 @@
 
 ## ✅ Phase 1: Foundation (COMPLETE)
 
-- [x] Initialize Poetry project with dependencies
+- [x] Initialize uv project with dependencies
 - [x] Create directory structure
 - [x] Implement `core/models.py` with Pydantic models
 - [x] Set up configuration management
@@ -113,7 +113,7 @@ The wiki generator is **functional and ready to use** for:
 
 1. **Install Dependencies**
    ```bash
-   poetry install
+   uv sync --extra dev
    ```
 
 2. **Set API Keys**
@@ -124,7 +124,7 @@ The wiki generator is **functional and ready to use** for:
 
 3. **Test with Sample**
    ```bash
-   poetry run wiki-generator generate examples/sample_story.txt --verbose
+   uv run wiki-generator generate examples/sample_story.txt --verbose
    ```
 
 ### Short-term Enhancements

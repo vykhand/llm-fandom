@@ -5,7 +5,7 @@
 An intelligent wiki generator that transforms books, websites, and documents into comprehensive, searchable wiki sites with automatically extracted entities, relationships, and beautiful formatting.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Poetry](https://img.shields.io/badge/dependency-poetry-purple.svg)](https://python-poetry.org/)
+[![uv](https://img.shields.io/badge/dependency-uv-blue.svg)](https://github.com/astral-sh/uv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features
@@ -32,7 +32,7 @@ The system extracts and generates wiki articles for:
 
 ### Prerequisites
 - Python 3.10 or higher
-- Poetry (dependency management)
+- uv (dependency management)
 - API key for Anthropic Claude or OpenAI
 
 ### Installation
@@ -41,8 +41,11 @@ The system extracts and generates wiki articles for:
 # Clone the repository (if from git)
 cd wiki-generator
 
-# Install dependencies with Poetry
-poetry install
+# Install uv if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies with uv
+uv sync --extra dev
 
 # Set up environment variables
 cp .env.example .env
@@ -55,7 +58,7 @@ cp .env.example .env
 ### Verify Setup
 
 ```bash
-poetry run wiki-generator check-config
+uv run wiki-generator check-config
 ```
 
 ### Generate Your First Wiki
@@ -63,13 +66,13 @@ poetry run wiki-generator check-config
 Try the included sample story:
 
 ```bash
-poetry run wiki-generator generate examples/sample_story.txt --output ./my-wiki --verbose
+uv run wiki-generator generate examples/sample_story.txt --output ./my-wiki --verbose
 ```
 
 Then serve it locally:
 
 ```bash
-poetry run wiki-generator serve ./my-wiki
+uv run wiki-generator serve ./my-wiki
 ```
 
 Open http://localhost:8000 to view your wiki!
@@ -241,13 +244,13 @@ Each article includes:
 
 ```bash
 # Run all tests
-poetry run pytest
+uv run pytest
 
 # Run with verbose output
-poetry run pytest -v
+uv run pytest -v
 
 # Run specific test file
-poetry run pytest tests/test_models.py
+uv run pytest tests/test_models.py
 ```
 
 ### Test Coverage
@@ -356,7 +359,7 @@ Built with excellent open-source tools:
 - [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) - Beautiful documentation theme
 - [Instructor](https://github.com/jxnl/instructor) - Structured LLM outputs
 - [Pydantic](https://pydantic-docs.helpmanual.io/) - Data validation
-- [Poetry](https://python-poetry.org/) - Dependency management
+- [uv](https://github.com/astral-sh/uv) - Fast Python package manager
 
 ## 📄 License
 

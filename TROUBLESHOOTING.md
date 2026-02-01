@@ -4,20 +4,20 @@ Common issues and solutions for the Wiki Generator.
 
 ## Installation Issues
 
-### Poetry Not Found
+### uv Not Found
 
-**Error**: `command not found: poetry`
+**Error**: `command not found: uv`
 
 **Solution**:
 ```bash
-# Install Poetry
-curl -sSL https://install.python-poetry.org | python3 -
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Add to PATH (add to ~/.bashrc or ~/.zshrc)
-export PATH="$HOME/.local/bin:$PATH"
+# Add to PATH (usually automatic, but if needed add to ~/.bashrc or ~/.zshrc)
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Verify installation
-poetry --version
+uv --version
 ```
 
 ### Python Version Error
@@ -33,8 +33,8 @@ python --version
 pyenv install 3.10
 pyenv local 3.10
 
-# Retry poetry install
-poetry install
+# Retry installation
+uv sync --extra dev
 ```
 
 ### Dependency Installation Fails
@@ -43,14 +43,14 @@ poetry install
 
 **Solution**:
 ```bash
-# Clear Poetry cache
-poetry cache clear pypi --all
+# Clear uv cache
+uv cache clean
 
 # Remove lock file
-rm poetry.lock
+rm uv.lock
 
 # Reinstall
-poetry install
+uv sync --extra dev
 ```
 
 ## API Key Issues
@@ -71,7 +71,7 @@ cp .env.example .env
 # ANTHROPIC_API_KEY=sk-ant-your-actual-key-here
 
 # Verify configuration
-poetry run wiki-generator check-config
+uv run wiki-generator check-config
 ```
 
 ### Invalid API Key
@@ -117,7 +117,7 @@ poetry run wiki-generator check-config
 1. Check content has sufficient detail:
    ```bash
    # Try with sample story first
-   poetry run wiki-generator generate examples/sample_story.txt --verbose
+   uv run wiki-generator generate examples/sample_story.txt --verbose
    ```
 
 2. Enable verbose logging to see LLM responses:
@@ -284,13 +284,13 @@ poetry run wiki-generator check-config
 **Solutions**:
 ```bash
 # Verify installation
-poetry show mkdocs
+uv pip list mkdocs
 
 # If missing, reinstall dependencies
-poetry install
+uv sync --extra dev
 
 # Verify mkdocs is available
-poetry run mkdocs --version
+uv run mkdocs --version
 ```
 
 ### Site Build Fails
@@ -301,7 +301,7 @@ poetry run mkdocs --version
 1. Check mkdocs.yml syntax:
    ```bash
    cd output_directory
-   poetry run mkdocs build --verbose
+   uv run mkdocs build --verbose
    ```
 
 2. Check for invalid characters in article titles
@@ -481,13 +481,13 @@ python -c "import os; from dotenv import load_dotenv; load_dotenv(); print(os.ge
 
 ```bash
 # List all installed packages
-poetry show
+uv pip list
 
 # Check specific package
-poetry show anthropic
+uv pip list anthropic
 
 # Update dependencies
-poetry update
+uv sync --upgrade
 ```
 
 ## Getting Help
@@ -506,7 +506,7 @@ If issues persist:
 
 3. **Gather information**:
    - Python version: `python --version`
-   - Poetry version: `poetry --version`
+   - uv version: `uv --version`
    - OS version
    - Error messages
    - Steps to reproduce
@@ -528,8 +528,8 @@ If issues persist:
 
 **Solution**: Install package in development mode:
 ```bash
-poetry install
-# Always use: poetry run wiki-generator
+uv sync --extra dev
+# Always use: uv run wiki-generator
 ```
 
 ### `ValidationError: X validation error(s) for Entity`
@@ -575,7 +575,7 @@ wiki-generator generate source.txt --config ./config/default_config.yaml
 6. **Update regularly**:
    ```bash
    git pull
-   poetry update
+   uv sync --upgrade
    ```
 
 ## Still Having Issues?

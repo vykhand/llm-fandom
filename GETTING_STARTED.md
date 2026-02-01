@@ -5,24 +5,24 @@ This guide will help you set up and use the Wiki Generator to create beautiful A
 ## Prerequisites
 
 - Python 3.10 or higher
-- Poetry (for dependency management)
+- uv (for dependency management)
 - API keys for LLM providers (Anthropic Claude or OpenAI)
 
 ## Installation
 
-### 1. Install Poetry
+### 1. Install uv
 
-If you don't have Poetry installed:
+If you don't have uv installed:
 
 ```bash
-curl -sSL https://install.python-poetry.org | python3 -
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ### 2. Install Dependencies
 
 ```bash
 cd wiki-generator
-poetry install
+uv sync --extra dev
 ```
 
 This will create a virtual environment and install all required dependencies.
@@ -49,7 +49,7 @@ OPENAI_API_KEY=sk-your-key-here
 Check that everything is configured correctly:
 
 ```bash
-poetry run wiki-generator check-config
+uv run wiki-generator check-config
 ```
 
 This will show which API keys are found and validate your configuration.
@@ -61,7 +61,7 @@ This will show which API keys are found and validate your configuration.
 Try the included sample story to see how it works:
 
 ```bash
-poetry run wiki-generator generate examples/sample_story.txt --output ./my-first-wiki --verbose
+uv run wiki-generator generate examples/sample_story.txt --output ./my-first-wiki --verbose
 ```
 
 This will:
@@ -75,7 +75,7 @@ This will:
 After generation completes, you can view the wiki:
 
 ```bash
-poetry run wiki-generator serve ./my-first-wiki
+uv run wiki-generator serve ./my-first-wiki
 ```
 
 Then open your browser to http://localhost:8000
@@ -85,19 +85,19 @@ Then open your browser to http://localhost:8000
 ### Generate from a PDF
 
 ```bash
-poetry run wiki-generator generate book.pdf --output ./book-wiki
+uv run wiki-generator generate book.pdf --output ./book-wiki
 ```
 
 ### Generate from a Website
 
 ```bash
-poetry run wiki-generator generate https://example.com/article --output ./web-wiki
+uv run wiki-generator generate https://example.com/article --output ./web-wiki
 ```
 
 ### Generate and Serve Immediately
 
 ```bash
-poetry run wiki-generator generate source.txt --serve
+uv run wiki-generator generate source.txt --serve
 ```
 
 ### Use Custom Configuration
@@ -126,7 +126,7 @@ extraction:
 Then use it:
 
 ```bash
-poetry run wiki-generator generate source.txt --config my-config.yaml
+uv run wiki-generator generate source.txt --config my-config.yaml
 ```
 
 ## Understanding the Output
@@ -212,7 +212,7 @@ Error: No API key found for provider anthropic
 Error: mkdocs command not found
 ```
 
-**Solution**: Reinstall dependencies with `poetry install`
+**Solution**: Reinstall dependencies with `uv sync --extra dev`
 
 ### Empty Extraction
 

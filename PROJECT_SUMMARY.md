@@ -64,7 +64,7 @@ wiki-generator/
 ### 1. Installation
 
 ```bash
-poetry install
+uv sync --extra dev
 cp .env.example .env
 # Edit .env with your API keys
 ```
@@ -72,19 +72,19 @@ cp .env.example .env
 ### 2. Verify Setup
 
 ```bash
-poetry run wiki-generator check-config
+uv run wiki-generator check-config
 ```
 
 ### 3. Generate Your First Wiki
 
 ```bash
-poetry run wiki-generator generate examples/sample_story.txt --output ./test-wiki --verbose
+uv run wiki-generator generate examples/sample_story.txt --output ./test-wiki --verbose
 ```
 
 ### 4. View the Wiki
 
 ```bash
-poetry run wiki-generator serve ./test-wiki
+uv run wiki-generator serve ./test-wiki
 ```
 
 Open http://localhost:8000
@@ -231,9 +231,9 @@ wiki-generator generate source.txt --serve
 
 ### Running Tests
 ```bash
-poetry run pytest
-poetry run pytest -v  # Verbose
-poetry run pytest tests/test_models.py  # Specific file
+uv run pytest
+uv run pytest -v  # Verbose
+uv run pytest tests/test_models.py  # Specific file
 ```
 
 ## ⚠️ Current Limitations
@@ -363,7 +363,7 @@ The system is ready for:
 **Next Steps**: Try it with the sample story, then use it on your own content!
 
 ```bash
-poetry run wiki-generator generate examples/sample_story.txt --serve --verbose
+uv run wiki-generator generate examples/sample_story.txt --serve --verbose
 ```
 
 Happy wiki generating! 🎉
