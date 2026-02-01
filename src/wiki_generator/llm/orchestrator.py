@@ -14,6 +14,7 @@ from tenacity import (
 
 from ..core.config import Config
 from .providers.anthropic_provider import AnthropicProvider
+from .providers.azure_openai_provider import AzureOpenAIProvider
 from .providers.base import LLMProvider, LLMResponse
 from .providers.openai_provider import OpenAIProvider
 
@@ -42,13 +43,27 @@ class LLMOrchestrator:
                 )
                 continue
 
+            # Prepare provider kwargs
+            provider_kwargs = {
+                "max_tokens": provider_config.get("max_tokens", 4096),
+                "temperature": provider_config.get("temperature", 0.7),
+                "timeout": provider_config.get("timeout", 60),
+            }
+
+            # Add Azure-specific parameters if present
+            if name == "azure_openai":
+                azure_endpoint = self.config.get_api_key(provider_config.get("azure_endpoint_env", ""))
+                if not azure_endpoint:
+                    logger.warning(f"No Azure endpoint found for provider {name}")
+                    continue
+                provider_kwargs["azure_endpoint"] = azure_endpoint
+                provider_kwargs["api_version"] = provider_config.get("api_version", "2024-02-15-preview")
+
             provider = self._create_provider(
                 name=name,
                 api_key=api_key,
                 model=provider_config["model"],
-                max_tokens=provider_config.get("max_tokens", 4096),
-                temperature=provider_config.get("temperature", 0.7),
-                timeout=provider_config.get("timeout", 60),
+                **provider_kwargs,
             )
 
             if provider:
@@ -66,6 +81,7 @@ class LLMOrchestrator:
         provider_map = {
             "anthropic": AnthropicProvider,
             "openai": OpenAIProvider,
+            "azure_openai": AzureOpenAIProvider,
         }
 
         provider_class = provider_map.get(name)
