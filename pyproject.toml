@@ -19,10 +19,9 @@ dependencies = [
     "trafilatura>=1.6",
     "requests>=2.31",
     # LLM Integration
-    "anthropic>=0.18",
-    "openai>=1.12",
-    "litellm>=1.30",
-    "instructor>=0.6",
+    "langchain-core>=0.3",
+    "langchain-anthropic>=0.3",
+    "langchain-openai>=0.3",
     "tenacity>=8.2",
     # Image Processing
     "pillow>=10.0",

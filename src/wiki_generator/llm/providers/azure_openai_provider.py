@@ -1,8 +1,8 @@
-"""Anthropic Claude provider implementation using LangChain."""
+"""Azure OpenAI provider implementation using LangChain."""
 
-from typing import Any, Dict, Optional, Type, TypeVar
+from typing import Any, Optional, Type, TypeVar
 
-from langchain_anthropic import ChatAnthropic
+from langchain_openai import AzureChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from pydantic import BaseModel
 
@@ -12,14 +12,16 @@ from .base import LLMProvider, LLMResponse
 T = TypeVar("T", bound=BaseModel)
 
 
-class AnthropicProvider(LLMProvider):
-    """Anthropic Claude LLM provider using LangChain with native structured outputs."""
+class AzureOpenAIProvider(LLMProvider):
+    """Azure OpenAI LLM provider using LangChain with native structured outputs."""
 
     def __init__(self, api_key: str, model: str, **kwargs: Any):
         super().__init__(api_key, model, **kwargs)
-        self.client = ChatAnthropic(
-            model=model,
+        self.client = AzureChatOpenAI(
+            azure_deployment=model,
             api_key=api_key,
+            azure_endpoint=kwargs.get("azure_endpoint", ""),
+            api_version=kwargs.get("api_version", "2024-02-15-preview"),
             max_tokens=self.max_tokens,
             temperature=self.temperature,
             timeout=self.timeout,
@@ -27,7 +29,7 @@ class AnthropicProvider(LLMProvider):
 
     @property
     def name(self) -> str:
-        return "anthropic"
+        return "azure_openai"
 
     async def generate(
         self,
@@ -35,7 +37,7 @@ class AnthropicProvider(LLMProvider):
         system_prompt: Optional[str] = None,
         **kwargs: Any,
     ) -> LLMResponse:
-        """Generate text using Claude via LangChain."""
+        """Generate text using Azure OpenAI via LangChain."""
         messages = []
         if system_prompt:
             messages.append(SystemMessage(content=system_prompt))
@@ -58,7 +60,7 @@ class AnthropicProvider(LLMProvider):
         system_prompt: Optional[str] = None,
         **kwargs: Any,
     ) -> T:
-        """Generate structured output using LangChain with_structured_output."""
+        """Generate structured output using LangChain with_structured_output (json_schema)."""
         structured_llm = self.client.with_structured_output(
             response_model, method="json_schema"
         )
