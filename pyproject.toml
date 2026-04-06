@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "AI-powered wiki generator from any content source"
 authors = [{name = "Wiki Generator Team"}]
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.10"
 dependencies = [
     # Core
